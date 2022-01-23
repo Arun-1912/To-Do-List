@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+    margin: 0;
+    background-color: rgb(142, 241, 133);
+}
+.container {
+    width: 80%;
+    margin: 20px auto;
+    border: 1px solid #000;
+    padding: 10px;
+    background-color: #fff;
+}
+.input-section {
+    display: flex;
+}
+.input-section input {
+    flex: 1;
+    padding: 0 5px;
+    flex: 1;
+    font-size: 15px;
+}
+.input-section .save-btn {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #E08E45;
+    border: 0;
+    color: #fff;
+}
+.listing-section ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}
+.listing-section ul li {
+    border: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+}
+.listing-section ul li span.done {
+    text-decoration: line-through;
+}
+.listing-section ul li .close {
+    background-color: #6B2737;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <h3>My To-Do List</h3>
+        <div class="input-section">
+            <input type="text" id="todo-text" placeholder="Add todo..." />
+            <button onclick="addTask()" class="save-btn">Save</button>
+        </div>
+        <div class="listing-section">
+            <ul id="todo-list">
+                <!-- <li>
+                    <span onclick="todoChecked(this)">Learn HTML</span>
+                    <span class="close">&times;</span>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        const todoText = document.getElementById('todo-text');
+const todoList = document.getElementById('todo-list');
+
+function addTask() {
+    if (todoText.value.trim() === '') {
+        alert('Enter some todo task..');
+    } else {
+        const newList = createATodoList(todoText.value);
+        todoText.value = '';
+        todoList.appendChild(newList);
+    }
+}
+
+function todoChecked(e) {
+    console.log(e.classList.toggle('done'));
+}
+
+function createATodoList(text) {
+    const list = document.createElement('li');
+    const span = document.createElement('span');
+    const textNode = document.createTextNode(text);
+    const closeSpan = document.createElement('span');
+    closeSpan.classList.add('close');
+    closeSpan.innerHTML = '&times;';
+    span.appendChild(textNode);
+    list.appendChild(span);
+    list.appendChild(closeSpan);
+    span.addEventListener('click', (e) => {
+        todoChecked(e.target);
+    });
+    closeSpan.addEventListener('click', (e) => {
+        const li = e.target.parentElement;
+        li.parentElement.removeChild(li)
+    });
+    return list;
+}
+    </script>
+</body>
+</html>
